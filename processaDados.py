@@ -732,7 +732,6 @@ def candDespesas(ano, estado):
 		d1 = [18, 16]
 	
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/candidato/"+estado+"/DespesasCandidatos.txt"
 		t0 = 19
 		t1 = 20
 		t2 = 21
@@ -863,7 +862,6 @@ def partDespesas(ano, estado):
 		d1 = 10
 
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/partido/"+estado+"/DespesasPartidos.txt"
 		s = 6
 		t0 = 16
 		v0 = 15
@@ -949,7 +947,6 @@ def comiDespesas(ano, estado):
 		d1 = [10]
 
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/comite/"+estado+"/DespesasComites.txt"
 		s = 6
 		t0 = 16
 		v0 = 15
@@ -1066,7 +1063,6 @@ def candReceitas(ano, estado):
 		r2 = 12
 
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/candidato/"+estado+"/ReceitasCandidatos.txt"
 		t0 = 22
 		t1 = 23
 		v0 = 21
@@ -1190,7 +1186,6 @@ def partReceitas(ano, estado):
 		v1 = 9
 
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/partido/"+estado+"/ReceitasPartidos.txt"
 		p = 6
 		ti = 20
 		d0 = 10
@@ -1290,7 +1285,6 @@ def comiReceitas(ano, estado):
 		v1 = 9
 
 	if (ano == '2012'):
-		arquivo = destFolder+ano+"/comite/"+estado+"/ReceitasComites.txt"
 		p = 6
 		ti = 19
 		d0 = 10
