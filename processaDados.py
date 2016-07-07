@@ -1083,7 +1083,7 @@ def candReceitas(ano, estado):
 		v0 = 14
 		v1 = 15
 		n = 1
-		r1 = [12]
+		r1 = [12, 16]
 
 	if (ano == '2012'):
 		t0 = 15
