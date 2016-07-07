@@ -950,7 +950,7 @@ def comiDespesas(ano, estado):
 	if (ano == '2012'):
 		s = 6
 		t1 = [16]
-		v1 = [15, 16]
+		v1 = [15, 16, 14]
 		d1 = [10, 11]
 
 	SQL = "SELECT pd.linhaComite FROM partDespesas pd WHERE pd.ano = '%s' AND pd.estado = '%s' AND pd.linhaComite IS NOT NULL" % (ano, estado)
