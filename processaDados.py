@@ -1074,8 +1074,7 @@ def candReceitas(ano, estado):
 	v0 = 22
 	v1 = 23
 	n = 4
-	r1 = 15
-	r2 = 14
+	r1 = [15, 14]
 	
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/candidato/"+estado+"/ReceitasCandidatos.txt"
@@ -1084,8 +1083,7 @@ def candReceitas(ano, estado):
 		v0 = 14
 		v1 = 15
 		n = 1
-		r1 = 12
-		r2 = 12
+		r1 = [12]
 
 	if (ano == '2012'):
 		t0 = 15
@@ -1093,8 +1091,7 @@ def candReceitas(ano, estado):
 		v0 = 17
 		v1 = 17
 		n = 1
-		r1 = 13
-		r2 = 14
+		r1 = [13, 14]
 
 	SQL = "SELECT linha FROM candReceitas cr WHERE cr.ano = '%s' AND cr.estado = '%s' " % (ano, estado)
 
@@ -1104,8 +1101,7 @@ def candReceitas(ano, estado):
 		v0 = 9
 		v1 = 9
 		n = 0
-		r1 = 15
-		r2 = 15
+		r1 = [15]
 		e = 3
 		
 	if (ano == '2008'):
@@ -1114,8 +1110,7 @@ def candReceitas(ano, estado):
 		v0 = 14
 		v1 = 14
 		n = 0
-		r1 = 20
-		r2 = 20
+		r1 = [20]
 		e = 6
 		
 	if (ano == '2006' or ano == '2008'):
@@ -1156,15 +1151,17 @@ def candReceitas(ano, estado):
 				#LEGENDA
 				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 
-				#PADRAO QUE E BOM, PULA...				
-				doador = addslashes(regb[r1], 'nome')
+				for rx in r1:
+					doador = addslashes(regb[rx], 'nome')
+					if (doador != 'ERR'):
+						break
+					
 				if (doador == 'ERR'):
+					print "DOADOR"
+					for ri,r in enumerate(regb):
+						print str(ri)+': '+str(r)
 					exit(1)
 					
-				if (doador == '#NULO'):
-					doador = addslashes(regb[r2], 'nome')
-					if (doador == 'ERR'):
-						exit(1)
 				#PADRAO QUE E BOM, PULA...
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
@@ -1194,9 +1191,7 @@ def partReceitas(ano, estado):
 	arquivo = destFolder+ano+"/receitas_partidos_"+ano+"_"+estado+".txt"
 	p = 14
 	ti = 21
-	d0 = 28
-	d1 = 11
-	d2 = 12
+	r1 = [28, 11, 12]
 	v0 = 19
 	v1 = 20
 		
@@ -1204,18 +1199,14 @@ def partReceitas(ano, estado):
 		arquivo = destFolder+ano+"/partido/"+estado+"/ReceitasPartidos.txt"
 		p = 3
 		ti = 10
-		d0 = 7
-		d1 = 7
-		d2 = 7
+		r1 = [7]
 		v0 = 9
 		v1 = 9
 
 	if (ano == '2012'):
 		p = 6
 		ti = 20
-		d0 = 10
-		d1 = 11
-		d2 = 11
+		r1 = [10, 11]
 		v0 = 18
 		v1 = 19
 		
@@ -1254,21 +1245,16 @@ def partReceitas(ano, estado):
 				
 				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
 				
-				doador = addslashes(regb[d0], 'nome')
+				for rx in r1:
+					doador = addslashes(regb[rx], 'nome')
+					if (doador != 'ERR'):
+						break
+					
 				if (doador == 'ERR'):
-					print "1: DOADOR"
+					print "DOADOR"
+					for ri,r in enumerate(regb):
+						print str(ri)+': '+str(r)
 					exit(1)
-				#PADRAO QUE E BOM, PULA...				
-				if (doador == '#NULO'):
-					doador = addslashes(regb[d1], 'nome')
-					if (doador == 'ERR'):
-						print "2: DOADOR"
-						exit(1)
-				if (doador == '#NULO'):
-					doador = addslashes(regb[d2], 'nome')
-					if (doador == 'ERR'):
-						print "2: DOADOR"
-						exit(1)
 				
 				#PADRAO QUE E BOM, PULA...
 				try:
@@ -1296,9 +1282,7 @@ def comiReceitas(ano, estado):
 	arquivo = destFolder+ano+"/receitas_comites_"+ano+"_"+estado+".txt"
 	p = 14
 	ti = 21
-	d0 = 28
-	d1 = 11
-	d2 = 12
+	r1 = [28, 11, 12]
 	v0 = 19
 	v1 = 20
 		
@@ -1306,18 +1290,14 @@ def comiReceitas(ano, estado):
 		arquivo = destFolder+ano+"/comite/"+estado+"/ReceitasComites.txt"
 		p = 3
 		ti = 10
-		d0 = 7
-		d1 = 7
-		d2 = 7
+		r1 = [7]
 		v0 = 9
 		v1 = 9
 
 	if (ano == '2012'):
 		p = 6
 		ti = 19
-		d0 = 10
-		d1 = 11
-		d2 = 11
+		r1 = [10, 11]
 		v0 = 18
 		v1 = 18
 
@@ -1326,9 +1306,7 @@ def comiReceitas(ano, estado):
 	if (ano == '2006'):
 		p = 1
 		ti = 7
-		d0 = 11
-		d1 = 11
-		d2 = 11
+		r1 = [11]
 		v0 = 5
 		v1 = 5
 		e = 3
@@ -1336,9 +1314,7 @@ def comiReceitas(ano, estado):
 	if (ano == '2008'):
 		p = 1
 		ti = 9
-		d0 = 13
-		d1 = 13
-		d2 = 13
+		r1 = [13]
 		v0 = 7
 		v1 = 7
 		e = 3
@@ -1388,21 +1364,16 @@ def comiReceitas(ano, estado):
 
 				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
 				
-				doador = addslashes(regb[d0], 'nome')
+				for rx in r1:
+					doador = addslashes(regb[rx], 'nome')
+					if (doador != 'ERR'):
+						break
+					
 				if (doador == 'ERR'):
 					print "DOADOR"
+					for ri,r in enumerate(regb):
+						print str(ri)+': '+str(r)
 					exit(1)
-				#PADRAO QUE E BOM, PULA...				
-				if (doador == '#NULO'):
-					doador = addslashes(regb[d1], 'nome')
-					if (doador == 'ERR'):
-						print "DOADOR-1"
-						exit(1)
-				if (doador == '#NULO'):
-					doador = addslashes(regb[d2], 'nome')
-					if (doador == 'ERR'):
-						print "DOADOR-2"
-						exit(1)
 				
 				#PADRAO QUE E BOM, PULA...
 				try:
