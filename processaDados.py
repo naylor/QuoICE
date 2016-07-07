@@ -765,7 +765,7 @@ def candDespesas(ano, estado):
 		d1 = [20, 21, 18, 24, 25, 26]
 
 	if (ano == '2006' or ano == '2008'):
-		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/Candidato/Despesa/DespesaCandidato.csv"
+		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/"+ano+"/Candidato/Despesa/DespesaCandidato.csv"
 		SQL = "SELECT linha FROM candDespesas cd WHERE cd.ano = '%s'" % (ano)
 		
 	try:
@@ -973,7 +973,7 @@ def comiDespesas(ano, estado):
 		d1 = [16, 14, 17, 23, 22, 21]
 		
 	if (ano == '2006' or ano == '2008'):
-		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/Comitê/Despesa/DespesaComitê.CSV"
+		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/"+ano+"/Comitê/Despesa/DespesaComitê.CSV"
 		SQL = "SELECT pd.linhaComite FROM partDespesas pd WHERE pd.ano = '%s' AND pd.linhaComite IS NOT NULL" % (ano)
 		
 	try:
@@ -1098,7 +1098,7 @@ def candReceitas(ano, estado):
 		e = 6
 		
 	if (ano == '2006' or ano == '2008'):
-		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/Candidato/Receita/ReceitaCandidato.csv"
+		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/"+ano+"/Candidato/Receita/ReceitaCandidato.csv"
 		SQL = "SELECT linha FROM candReceitas cr WHERE cr.ano = '%s' " % (ano)
 
 	try:
@@ -1322,7 +1322,7 @@ def comiReceitas(ano, estado):
 		e = 3
 		
 	if (ano == '2006' or ano == '2008'):
-		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/Comitê/Receita/ReceitaComitê.CSV"
+		arquivo = destFolder+ano+"/prestacao_contas_"+ano+"/"+ano+"/Comitê/Receita/ReceitaComitê.CSV"
 		SQL = "SELECT pr.linhaComite FROM partReceitas pr WHERE pr.ano = '%s' AND pr.linhaComite IS NOT NULL" % (ano)
 				
 	try:
