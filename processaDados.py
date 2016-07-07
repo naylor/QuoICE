@@ -891,8 +891,10 @@ def partDespesas(ano, estado):
 		t0 = 16
 		v0 = 15
 		v1 = 16
+		v1 = 14
 		d0 = 10
 		d1 = 11
+		d2 = 12
 		
 	try:
 		with open(arquivo, "r") as ins:
@@ -927,8 +929,8 @@ def partDespesas(ano, estado):
 				partido = buscaPartido(addslashes(regb[s]))
 				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				
-				for ri,r in enumerate(regb):
-					print str(ri)+': '+str(r)
+				#for ri,r in enumerate(regb):
+				#	print str(ri)+': '+str(r)
 						
 				#PADRAO QUE E BOM, PULA...
 				try:
@@ -936,7 +938,11 @@ def partDespesas(ano, estado):
 					despesa = addslashes(regb[d0], 'nome')
 				except ValueError:
 					despesa = addslashes(regb[d1], 'nome')
-					valor = float(addslashes(regb[v1]).replace(',','.'))
+					try:
+						valor = float(addslashes(regb[v1]).replace(',','.'))
+					except ValueError:
+						valor = float(addslashes(regb[v2]).replace(',','.'))
+						despesa = addslashes(regb[d2], 'nome')
 
 				if (despesa == 'ERR'):
 					print "DESPESA"
