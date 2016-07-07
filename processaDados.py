@@ -356,7 +356,7 @@ def addslashes(string, campo=''):
 	if campo == 'nome':
 		if string == '':
 			return 'NÃO DECLARADO'
-		if len(string) < 3:
+		if len(string) < 2:
 			return 'ERR'
 		if re.search('(?![\d_])\w', string):
 			return string
