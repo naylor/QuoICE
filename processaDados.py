@@ -457,6 +457,8 @@ def buscaCodigo(tabela, chave, ignoreInsert=0):
    
 	if (rowcount > 0):
 		for row in result:
+			if row[0] == 'None':
+				return 'ERR'
 			return row[0]
 	
 	if (ignoreInsert == 0):
