@@ -1,0 +1,289 @@
+﻿/*=============================================================
+    Authour URI: www.binarytheme.com
+    License: Commons Attribution 3.0
+
+    http://creativecommons.org/licenses/by/3.0/
+
+    100% To use For Personal And Commercial Use.
+    IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
+   
+========================================================  */
+
+/*==============================================
+    CAROUSEL  STYLES    
+=============================================*/
+
+h1, .h1, h2, .h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.carousel-indicators {
+    bottom: -10px;
+}
+
+.col-md-10 {
+	padding: 0px;
+	margin: 0;
+	text-align: left;
+	width: none;
+}
+
+.user-nome-td {
+	float: left;
+	width: 580px;
+	height: 150px;
+}
+
+.user-nome {
+	float: left;
+	width: 580px;
+	height: 120px;
+}
+
+.user-img {
+	width: 125px;
+	height: 140px;
+	float: left;
+	margin: 0px;
+}
+
+.user-valor {
+	float: left;
+	width: 524px;
+	height: 90px;
+	text-align: left;	
+	margin-top: -40px;
+	margin-left: 20px;
+}
+
+.user-valor-td {
+	float: left;
+	width: 140px;
+	height: 50px;
+}
+
+.user-dados {
+	float: left;
+	width: 390px;
+	text-align: left;	
+}
+
+.user-grf {
+	float: right;
+	margin-top : -55px;
+}
+
+.user-proc {
+	float: left;
+	width: 290px;
+	text-align: left;
+}
+
+.user-img img {
+	border: 2px solid #fff;
+	overflow: hidden;
+	border-radius: 30%;
+	display: inline-block;
+	width: 135px;
+	height: 170px;
+}
+
+.user-dados h1 {
+	font-size: 12px;
+	color: #FFF;
+}
+
+.user-dados h2 {
+	font-size: 20px;
+	color: #FFF;
+}
+
+.user-valor h1, .user-valor-td h1 {
+	font-size: 15px;
+	color: #FFF;
+}
+
+.user-valor h2, .user-valor-td h2 {
+	font-size: 20px;
+	color: #FFF;
+}
+
+.user-proc h1 {
+	font-size: 12px;
+	color: #FFF;
+}
+
+.user-proc h2 {
+	font-size: 20px;
+	color: #FFF;
+}
+
+#reviews .c-black {
+    color:#fff;
+    font-style: italic;
+	font-size: 30px;
+	padding: 5px;
+	width: 100px;
+}
+
+#reviews .c-sub {
+    color:#000;
+    font-style: italic;
+	font-size: 15px;
+	padding: 5px;
+	width: 100px;
+}
+
+.pull-right {
+	text-align: center;
+	width: 550px;
+}
+
+#reviews .img-u {
+	max-height: 200px;
+	max-width: 200px;
+}
+
+#reviews {
+    height: 420px;
+    background-color:#64A2DB;
+	padding: 5px;
+}
+
+#reviews h4 {
+	color: #fff;
+	line-height: 30px;
+	font-size: 16px;
+}
+
+/*==============================================
+    MAIN BOX  STYLES    
+=============================================*/
+
+.col-md-12 {
+	padding-left: 12px;
+	width: 1024px;
+	text-align: left;
+}
+
+#button {
+	cursor: none;
+	padding: 0px 0px;
+    margin-top:10px;
+    margin-left: 3.3px;
+    width: 31.5px;
+    height: 33px;
+}
+
+#button:hover {
+	background-color: orange;
+}
+
+#button:focus {
+	background-color: orange;
+}
+
+#main-menu {
+	font-size: 14px;
+}
+
+.user-dados > h2 {
+  width: 360px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-box {
+	margin-top: 10px;
+    border-radius:5px;
+    -moz-border-radius:5px ;
+    -webkit-border-radius:5px;
+    height: 55px;
+    width: 290px;
+}
+
+.main-box a {
+    color:#fff;
+	text-decoration:none;
+}
+
+.main-box:hover {
+    background-color: orange;
+}
+
+.mb-dull {
+    background-color:#8F8F2C;
+}
+
+.mb-red {
+    background-color:#8F8F2C;
+}
+
+.mb-pink {
+    background-color:#8F8F2C;
+}
+
+.main-box p {
+	font-size:15px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin-bottom: -5px;
+	line-height: 18px;
+	padding-top: 3px;
+}
+
+.main-box h6 {
+	font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+
+/*==============================================
+        MENU
+=============================================*/
+
+.nav > li > a {
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.header-topo > #pesquisa > ul > li {
+	width: 490px;
+	font-size: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sidebar-collapse .nav {
+	padding: 0;
+	text-align: left;
+}
+
+#main-menu li a:hover {
+	background-color: orange;
+}
+
+.sidebar-collapse .nav > li > a {
+	color: #fff;
+	text-shadow: none;
+	height: 42px;
+	padding: 5px 5px;
+}
+
+.sidebar-collapse .nav > li {
+	background: #666;
+}
+
+.inactive {
+	background-color: #428bca;
+}
+
+.clicked {
+	background-color: orange;
+}
