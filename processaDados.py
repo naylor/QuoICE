@@ -356,24 +356,80 @@ def addslashes(string, campo=''):
 	if campo == 'nome':
 		if string == '':
 			return 'NÃO DECLARADO'
-		if len(string) < 4:
+		if len(string) < 3:
 			return 'ERR'
 		if re.search('(?![\d_])\w', string):
 			return string
 		else:
 			return 'ERR'
-	else:
-		return string
 	
+	if campo == 'valor':
+		try:
+			valor = float(string.replace(',','.'))
+			return valor
+		except ValueError:
+			return 'ERR'
+			
+	return string
+
+def getCampos(regb, v1, t1, de1, do1):
+	
+	descricao=''
+	doador=''
+	tipo=''
+	valor=''
+	
+	for vx in v1:
+		valor = addslashes(regb[vx], 'valor')
+		if (valor != 'ERR'):
+			break
+	
+	for dex in de1:
+		descricao = addslashes(regb[dex], 'nome')
+		if (descricao != 'ERR'):
+			descricao = "{0:<10s}".format(truncate(descricao, 200))
+			break
+
+	for tx in t1:
+		tipo = buscaCodigo('tipo', addslashes(regb[tx], 'nome'))
+		if (tipo != 'ERR'):
+			break
+
+	for dox in do1:
+		doador = buscaSimilaridade('doador', addslashes(regb[dox], 'nome'))
+		if (doador != 'ERR'):
+			break
+
+	erro=0
+	if valor == 'ERR':
+		print "VALOR"
+		erro=1
+	if tipo == 'ERR':
+		print "TIPO"
+		erro=1
+	if descricao == 'ERR':
+		print "DESCRICAO"
+		erro=1
+	if doador == 'ERR':
+		print "DOADOR"
+		erro=1
+	
+	if erro == 1:
+		for ri,r in enumerate(regb):
+			print str(ri)+': '+str(r)
+		
+		exit(1)
+	
+	return (valor, tipo, descricao, doador)
+
 def buscaSimilaridade(tabela, chave, ignoreInsert=0):
    
 	if (chave == '#NULO'):
 		chave = 'NÃO DECLARADO'
-		
+	
 	chave2 = '%'+chave[:4]+'%'
 	
 	SQL_QUERY = "SELECT codigo, nome, LEVENSHTEIN(nome, '%s') AS distance FROM %s WHERE nome LIKE '%s' ORDER BY distance ASC LIMIT 1" % (chave, tabela, chave2)
-	
 	(result, rowcount) = selectSQL(SQL_QUERY)
    
 	find = 0
@@ -604,9 +660,6 @@ def candidato(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 						
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
-
 				#LEGENDA
 				cargo = buscaSimilaridade('candCargo',addslashes(regb[c]))
 				
@@ -698,22 +751,14 @@ def candBens(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 			
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
-					
 				cpf = ''
 
 				#LEGENDA
 				ano = addslashes(regb[2])
 				id = addslashes(regb[5])
-				valor = float(addslashes(regb[9]))
+				
+				(valor, tipo, descricao, doador) = getCampos(regb, [9], [7], [8, 7], [])
 
-				tipo = buscaCodigo('tipo',addslashes(regb[7], 'nome'))
-				descricao = addslashes(regb[8], 'nome')
-
-				if (descricao == 'ERR'):
-					descricao = 'NÃO DECLARADO'
-					
 				SQL = "SELECT codigo FROM candidato WHERE id = %s" % (id)
 				(r, c) = selectSQL(SQL)
 				if (c > 0):
@@ -733,55 +778,35 @@ def candBens(ano, estado):
 
 def candDespesas(ano, estado):
 	arquivo = destFolder+ano+"/despesas_candidatos_"+ano+"_"+estado+".txt"
-	t0 = 20
-	t1 = 21
-	t2 = 22
-	v0 = 19
-	v1 = 20
-	v2 = 21
+	t1 = [20, 21, 22]
+	v1 = [19, 20, 21]
 	n = 4
 	d1 = [15]
 		
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/candidato/"+estado+"/DespesasCandidatos.txt"
-		t0 = 15
-		t1 = 16
-		t2 = 16
-		v0 = 14
-		v1 = 15
-		v2 = 15
+		t1 = [15, 16]
+		v1 = [14, 15]
 		n = 1
 		d1 = [18, 16]
 	
 	if (ano == '2012'):
-		t0 = 15
-		t1 = 18
-		t2 = 15
-		v0 = 18
-		v1 = 17
-		v2 = 19
+		t1 = [15, 18, 15]
+		v1 = [18, 17, 19]
 		n = 1
 		d1 = [13, 14]
 
 	SQL = "SELECT linha FROM candDespesas cd WHERE cd.ano = '%s' AND cd.estado = '%s'" % (ano, estado)
 
 	if (ano == '2006'):
-		t0 = 11
-		t1 = 11
-		t2 = 11
-		v0 = 9
-		v1 = 9
-		v2 = 9
+		t1 = [11]
+		v1 = [9]
 		n = 0
 		d1 = [18, 16, 19, 22]
 
 	if (ano == '2008'):
-		t0 = 13
-		t1 = 13
-		t2 = 13
-		v0 = 11
-		v1 = 11
-		v2 = 11
+		t1 = [13]
+		v1 = [11]
 		n = 0
 		d1 = [20, 21, 18, 24, 25, 26]
 
@@ -820,40 +845,12 @@ def candDespesas(ano, estado):
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[5])
 					
-				#PADRAO QUE E BOM, PULA...
-				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
-				if (tipo == '#NULO'):
-					tipo = buscaCodigo('tipo',addslashes(regb[t1], 'nome'))
-
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
-						
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-					tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
-				except ValueError:
-					tipo = buscaCodigo('tipo',addslashes(regb[t1], 'nome'))
-					try:
-						valor = float(addslashes(regb[v1]).replace(',','.'))
-					except ValueError:
-						valor = float(addslashes(regb[v2]).replace(',','.'))
-						tipo = buscaCodigo('tipo',addslashes(regb[t2], 'nome'))
-					
 				id = addslashes(regb[n])
 				
-				for dx in d1:
-					despesa = addslashes(regb[dx], 'nome')
-					if (despesa != 'ERR'):
-						break
-					
-				if (despesa == 'ERR'):
-					print "DESPESA"
-					for ri,r in enumerate(regb):
-						print str(ri)+': '+str(r)
-					exit(1)
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, d1, [])
+
 				
-				despesa = "{0:<10s}".format(truncate(despesa, 200))
-				SQL = "INSERT IGNORE INTO candDespesas VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (id, ano, estado, valor, tipo, despesa, numLinha)
+				SQL = "INSERT IGNORE INTO candDespesas VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (id, ano, estado, valor, tipo, descricao, numLinha)
 
 				executeSQL(SQL)
 				
@@ -871,30 +868,22 @@ def candDespesas(ano, estado):
 def partDespesas(ano, estado):
 	arquivo = destFolder+ano+"/despesas_partidos_"+ano+"_"+estado+".txt"
 	s = 7
-	t0 = 17
-	v0 = 16
-	v1 = 17
-	d0 = 11
-	d1 = 12
+	t1 = [17]
+	v1 = [16, 17]
+	d1 = [11, 12]
 		
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/partido/"+estado+"/DespesasPartidos.txt"
 		s = 3
-		t0 = 11
-		v0 = 9
-		v1 = 9
-		d0 = 10
-		d1 = 10
-
+		t1 = [11]
+		v1 = [9]
+		d1 = [10]
+		
 	if (ano == '2012'):
 		s = 6
-		t0 = 16
-		v0 = 15
-		v1 = 16
-		v1 = 14
-		d0 = 10
-		d1 = 11
-		d2 = 12
+		t1 = [16]
+		v1 = [15, 16, 14]
+		d1 = [10, 11, 12]
 		
 	try:
 		with open(arquivo, "r") as ins:
@@ -927,30 +916,10 @@ def partDespesas(ano, estado):
 				
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
-				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
-						
-				#PADRAO QUE E BOM, PULA...
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-					despesa = addslashes(regb[d0], 'nome')
-				except ValueError:
-					despesa = addslashes(regb[d1], 'nome')
-					try:
-						valor = float(addslashes(regb[v1]).replace(',','.'))
-					except ValueError:
-						valor = float(addslashes(regb[v2]).replace(',','.'))
-						despesa = addslashes(regb[d2], 'nome')
-
-				if (despesa == 'ERR'):
-					print "DESPESA"
-					for ri,r in enumerate(regb):
-						print str(ri)+': '+str(r)
-					exit(1)
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, d1, [])
 					
-				SQL = "INSERT IGNORE INTO partDespesas (codigo, partido, ano, estado, valor, tipo, descricao, linhaPartido) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, despesa, numLinha)
+				SQL = "INSERT IGNORE INTO partDespesas (codigo, partido, ano, estado, valor, tipo, descricao, linhaPartido) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, descricao, numLinha)
 				executeSQL(SQL)
 
 		ins.close()
@@ -967,40 +936,35 @@ def partDespesas(ano, estado):
 def comiDespesas(ano, estado):
 	arquivo = destFolder+ano+"/despesas_comites_"+ano+"_"+estado+".txt"
 	s = 7
-	t0 = 17
-	v0 = 16
-	v1 = 17
+	t1 = [17, 16]
+	v1 = [16, 17]
 	d1 = [11, 12]
 
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/comite/"+estado+"/DespesasComites.txt"
 		s = 3
-		t0 = 11
-		v0 = 9
-		v1 = 9
+		t1 = [11]
+		v1 = [9]
 		d1 = [10]
 
 	if (ano == '2012'):
 		s = 6
-		t0 = 16
-		v0 = 15
-		v1 = 16
+		t1 = [16]
+		v1 = [15, 16]
 		d1 = [10, 11]
 
 	SQL = "SELECT pd.linhaComite FROM partDespesas pd WHERE pd.ano = '%s' AND pd.estado = '%s' AND pd.linhaComite IS NOT NULL" % (ano, estado)
 
 	if (ano == '2006'):
 		s = 2
-		t0 = 7
-		v0 = 5
-		v1 = 5
+		t1 = [7]
+		v1 = [5]
 		d1 = [14]
 
 	if (ano == '2008'):
 		s = 2
-		t0 = 9
-		v0 = 7
-		v1 = 7
+		t1 = [9]
+		v1 = [7]
 		d1 = [16, 14, 17, 23, 22, 21]
 		
 	if (ano == '2006' or ano == '2008'):
@@ -1035,34 +999,15 @@ def comiDespesas(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 
-				for ri,r in enumerate(regb):
-					print str(ri)+': '+str(r)
-				
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[3])
 
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
 
-				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
-				#PADRAO QUE E BOM, PULA...
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-				except ValueError:
-					valor = float(addslashes(regb[v1]).replace(',','.'))
-
-				for dx in d1:
-					despesa = addslashes(regb[dx], 'nome')
-					if (despesa != 'ERR'):
-						break
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, d1, [])
 					
-				if (despesa == 'ERR'):
-					print "DESPESA"
-					for ri,r in enumerate(regb):
-						print str(ri)+': '+str(r)
-					exit(1)
-					
-				SQL = "INSERT IGNORE INTO partDespesas (codigo, partido, ano, estado, valor, tipo, descricao, linhaComite) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, despesa, numLinha)
+				SQL = "INSERT IGNORE INTO partDespesas (codigo, partido, ano, estado, valor, tipo, descricao, linhaComite) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, descricao, numLinha)
 				executeSQL(SQL)
 
 		ins.close()
@@ -1078,48 +1023,38 @@ def comiDespesas(ano, estado):
 	
 def candReceitas(ano, estado):
 	arquivo = destFolder+ano+"/receitas_candidatos_"+ano+"_"+estado+".txt"
-	t0 = 23
-	t1 = 24
-	v0 = 22
-	v1 = 23
+	t1 = [23, 24]
+	v1 = [22, 23]
 	n = 4
-	r1 = [15, 14]
+	d1 = [15, 14]
 	
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/candidato/"+estado+"/ReceitasCandidatos.txt"
-		t0 = 15
-		t1 = 16
-		v0 = 14
-		v1 = 15
+		t1 = [15, 16]
+		v1 = [14, 15]
 		n = 1
-		r1 = [12, 16]
+		d1 = [12, 16]
 
 	if (ano == '2012'):
-		t0 = 15
-		t1 = 18
-		v0 = 17
-		v1 = 17
+		t1 = [15, 18]
+		v1 = [17]
 		n = 1
-		r1 = [13, 14]
+		d1 = [13, 14]
 
 	SQL = "SELECT linha FROM candReceitas cr WHERE cr.ano = '%s' AND cr.estado = '%s' " % (ano, estado)
 
 	if (ano == '2006'):
-		t0 = 11
-		t1 = 11
-		v0 = 9
-		v1 = 9
+		t1 = [11]
+		v1 = [9]
 		n = 0
-		r1 = [15]
+		d1 = [15]
 		e = 3
 		
 	if (ano == '2008'):
-		t0 = 16
-		t1 = 16
-		v0 = 14
-		v1 = 14
+		t1 = [16]
+		v1 = [14]
 		n = 0
-		r1 = [20]
+		d1 = [20]
 		e = 6
 		
 	if (ano == '2006' or ano == '2008'):
@@ -1157,32 +1092,11 @@ def candReceitas(ano, estado):
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[e])
 
-				#LEGENDA
-				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, [], d1)
 
-				for rx in r1:
-					doador = addslashes(regb[rx], 'nome')
-					if (doador != 'ERR'):
-						break
-					
-				if (doador == 'ERR'):
-					print "DOADOR"
-					for ri,r in enumerate(regb):
-						print str(ri)+': '+str(r)
-					exit(1)
-					
-				#PADRAO QUE E BOM, PULA...
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-				except ValueError:
-					tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
-					if (regb[v1] == ''): regb[v1] = '0,00'
-					valor = float(addslashes(regb[v1]).replace(',','.'))
-		
-				receita = buscaSimilaridade('doador', doador)
 				id = addslashes(regb[n])
 
-				SQL = "INSERT IGNORE INTO candReceitas VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (id, ano, estado, valor, tipo, receita, numLinha)
+				SQL = "INSERT IGNORE INTO candReceitas VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (id, ano, estado, valor, tipo, doador, numLinha)
 				executeSQL(SQL)
 
 		ins.close()
@@ -1199,26 +1113,26 @@ def candReceitas(ano, estado):
 def partReceitas(ano, estado):
 	arquivo = destFolder+ano+"/receitas_partidos_"+ano+"_"+estado+".txt"
 	p = 14
-	ti = 21
-	r1 = [28, 11, 12]
-	v0 = 19
-	v1 = 20
+	t1 = [21]
+	d1 = [28, 11, 12]
+	v1 = [19, 20]
 		
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/partido/"+estado+"/ReceitasPartidos.txt"
 		p = 3
-		ti = 10
-		r1 = [7]
-		v0 = 9
-		v1 = 9
+		t1 = [10]
+		d1 = [7]
+		v1 = [9]
 
 	if (ano == '2012'):
 		p = 6
-		ti = 20
-		r1 = [10, 11]
-		v0 = 18
-		v1 = 19
-		
+		t1 = [20]
+		d1 = [10, 11]
+		v1 = [18, 19]
+
+	if (ano == '2014'):
+		p = 7
+
 	try:
 		with open(arquivo, "r") as ins:
 		
@@ -1250,29 +1164,12 @@ def partReceitas(ano, estado):
 
 				#LEGENDA
 				partido = addslashes(regb[p])
-				if (ano == '2010' or ano == '2012'): partido = buscaPartido(addslashes(regb[p]))
-				
-				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
-				
-				for rx in r1:
-					doador = addslashes(regb[rx], 'nome')
-					if (doador != 'ERR'):
-						break
-					
-				if (doador == 'ERR'):
-					print "DOADOR"
-					for ri,r in enumerate(regb):
-						print str(ri)+': '+str(r)
-					exit(1)
-				
-				#PADRAO QUE E BOM, PULA...
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-				except ValueError:
-					valor = float(addslashes(regb[v1]).replace(',','.'))
-		
-				receita = buscaSimilaridade('doador', doador)
-				SQL = "INSERT IGNORE INTO partReceitas (codigo, partido, ano, estado, valor, tipo, doador, linhaPartido) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, receita, numLinha)
+				if (ano == '2010' or ano == '2012' or ano == '2014'): 
+					partido = buscaPartido(addslashes(regb[p]))
+
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, [], d1)
+
+				SQL = "INSERT IGNORE INTO partReceitas (codigo, partido, ano, estado, valor, tipo, doador, linhaPartido) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, doador, numLinha)
 
 				executeSQL(SQL)
 
@@ -1289,43 +1186,38 @@ def partReceitas(ano, estado):
 
 def comiReceitas(ano, estado):
 	arquivo = destFolder+ano+"/receitas_comites_"+ano+"_"+estado+".txt"
-	p = 14
-	ti = 21
-	r1 = [28, 11, 12]
-	v0 = 19
-	v1 = 20
+	p = 7
+	t1 = [21]
+	d1 = [28, 11, 12]
+	v1 = [19, 20]
 		
 	if (ano == '2010'):
 		arquivo = destFolder+ano+"/comite/"+estado+"/ReceitasComites.txt"
 		p = 3
-		ti = 10
-		r1 = [7]
-		v0 = 9
-		v1 = 9
+		t1 = [10]
+		d1 = [7]
+		v1 = [9]
 
 	if (ano == '2012'):
 		p = 6
-		ti = 19
-		r1 = [10, 11]
-		v0 = 18
-		v1 = 18
+		t1 = [19]
+		d1 = [10, 11]
+		v1 = [18]
 
 	SQL = "SELECT pr.linhaComite FROM partReceitas pr WHERE pr.ano = '%s' AND pr.estado = '%s' AND pr.linhaComite IS NOT NULL" % (ano, estado)
 
 	if (ano == '2006'):
 		p = 1
-		ti = 7
-		r1 = [11]
-		v0 = 5
-		v1 = 5
+		t1 = [7]
+		d1 = [11]
+		v1 = [5]
 		e = 3
 
 	if (ano == '2008'):
 		p = 1
-		ti = 9
-		r1 = [13]
-		v0 = 7
-		v1 = 7
+		t1 = [9]
+		d1 = [13]
+		v1 = [7]
 		e = 3
 		
 	if (ano == '2006' or ano == '2008'):
@@ -1359,40 +1251,22 @@ def comiReceitas(ano, estado):
 				
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
-
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
-				
+	
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[e])
 
 				#LEGENDA
 				partido = addslashes(regb[p])
-				if (ano == '2010' or ano == '2012'): 
+				if (ano == '2010' or ano == '2012' or ano == '2014'): 
 					partido = buscaPartido(addslashes(regb[p]))
 
-				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
-				
-				for rx in r1:
-					doador = addslashes(regb[rx], 'nome')
-					if (doador != 'ERR'):
-						break
-					
-				if (doador == 'ERR'):
-					print "DOADOR"
+				if partido == 'NULO':
 					for ri,r in enumerate(regb):
 						print str(ri)+': '+str(r)
 					exit(1)
-				
-				#PADRAO QUE E BOM, PULA...
-				try:
-					valor = float(addslashes(regb[v0]).replace(',','.'))
-				except ValueError:
-					if (addslashes(regb[v1]) == ''): regb[v1] = '0.00'
-					valor = float(addslashes(regb[v1]).replace(',','.'))
-						
-				receita = buscaSimilaridade('doador', doador)
-				SQL = "INSERT IGNORE INTO partReceitas (codigo, partido, ano, estado, valor, tipo, doador, linhaComite) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, receita, numLinha)
+				(valor, tipo, descricao, doador) = getCampos(regb, v1, t1, [], d1)
+
+				SQL = "INSERT IGNORE INTO partReceitas (codigo, partido, ano, estado, valor, tipo, doador, linhaComite) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (partido, ano, estado, valor, tipo, doador, numLinha)
 				executeSQL(SQL)
 
 		ins.close()
