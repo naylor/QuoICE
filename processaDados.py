@@ -708,7 +708,7 @@ def candBens(ano, estado):
 				id = addslashes(regb[5])
 				valor = float(addslashes(regb[9]))
 
-				tipo = buscaCodigo('tipo',addslashes(regb[7]))
+				tipo = buscaCodigo('tipo',addslashes(regb[7], 'nome'))
 				descricao = addslashes(regb[8], 'nome')
 
 				if (descricao == 'ERR'):
@@ -821,23 +821,23 @@ def candDespesas(ano, estado):
 					estado = addslashes(regb[5])
 					
 				#PADRAO QUE E BOM, PULA...
-				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				if (tipo == '#NULO'):
-					tipo = buscaCodigo('tipo',addslashes(regb[t1]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t1], 'nome'))
 
 				#for ri,r in enumerate(regb):
 				#	print str(ri)+': '+str(r)
 						
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
-					tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				except ValueError:
-					tipo = buscaCodigo('tipo',addslashes(regb[t1]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t1], 'nome'))
 					try:
 						valor = float(addslashes(regb[v1]).replace(',','.'))
 					except ValueError:
 						valor = float(addslashes(regb[v2]).replace(',','.'))
-						tipo = buscaCodigo('tipo',addslashes(regb[t2]))
+						tipo = buscaCodigo('tipo',addslashes(regb[t2], 'nome'))
 					
 				id = addslashes(regb[n])
 				
@@ -925,7 +925,7 @@ def partDespesas(ano, estado):
 				
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
-				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				
 				#PADRAO QUE E BOM, PULA...
 				try:
@@ -1035,7 +1035,7 @@ def comiDespesas(ano, estado):
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
 
-				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				#PADRAO QUE E BOM, PULA...
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
@@ -1154,7 +1154,7 @@ def candReceitas(ano, estado):
 					estado = addslashes(regb[e])
 
 				#LEGENDA
-				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 
 				#PADRAO QUE E BOM, PULA...				
 				doador = addslashes(regb[r1], 'nome')
@@ -1169,7 +1169,7 @@ def candReceitas(ano, estado):
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
 				except ValueError:
-					tipo = buscaCodigo('tipo',addslashes(regb[t0]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 					if (regb[v1] == ''): regb[v1] = '0,00'
 					valor = float(addslashes(regb[v1]).replace(',','.'))
 		
@@ -1252,7 +1252,7 @@ def partReceitas(ano, estado):
 				partido = addslashes(regb[p])
 				if (ano == '2010' or ano == '2012'): partido = buscaPartido(addslashes(regb[p]))
 				
-				tipo = buscaCodigo('tipo',addslashes(regb[ti]))
+				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
 				
 				doador = addslashes(regb[d0], 'nome')
 				if (doador == 'ERR'):
@@ -1386,7 +1386,7 @@ def comiReceitas(ano, estado):
 				if (ano == '2010' or ano == '2012'): 
 					partido = buscaPartido(addslashes(regb[p]))
 
-				tipo = buscaCodigo('tipo',addslashes(regb[ti]))
+				tipo = buscaCodigo('tipo',addslashes(regb[ti], 'nome'))
 				
 				doador = addslashes(regb[d0], 'nome')
 				if (doador == 'ERR'):
