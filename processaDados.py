@@ -19,7 +19,10 @@ import re
 con = ''
 
 #----------------------------------------------------------------
-inicio = 2010
+inicio = 2008
+userMysql = 'root'
+userPass = ''
+
 estados = [
 	'AC', 'AL', 'AM', 'AP', 'BA', 'BR', 'CE', 'DF', 'ES', 
 	'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 
@@ -50,7 +53,7 @@ def connect():
 	global con
 	
 	# create connection with database
-	con = MySQLdb.connect('localhost', 'root', '123456')
+	con = MySQLdb.connect('localhost', userMysql, userPass)
 	con.autocommit(False)
 	con.select_db('projeto')
 
@@ -1063,13 +1066,13 @@ def candReceitas(ano, estado):
 		r2 = 12
 
 	if (ano == '2012'):
-		t0 = 22
-		t1 = 23
-		v0 = 21
-		v1 = 22
+		t0 = 15
+		t1 = 18
+		v0 = 17
+		v1 = 17
 		n = 1
-		r1 = 14
-		r2 = 13
+		r1 = 13
+		r2 = 14
 
 	SQL = "SELECT linha FROM candReceitas cr WHERE cr.ano = '%s' AND cr.estado = '%s' " % (ano, estado)
 
