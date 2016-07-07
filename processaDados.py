@@ -1488,7 +1488,7 @@ def main():
 def procAno(ano):
 
 	#Download dos arquivos no site do STE
-	getFiles(ano)
+	#getFiles(ano)
 
 	for i,estado in enumerate(estados):
 		print "\n\nProcessando Legendas: " + ano + "|" + estado
