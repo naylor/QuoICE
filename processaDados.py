@@ -19,9 +19,9 @@ import re
 con = ''
 
 #----------------------------------------------------------------
-inicio = 2008
+inicio = 2006
 userMysql = 'root'
-userPass = ''
+userPass = open(".password").readline().rstrip()
 
 estados = [
 	'AC', 'AL', 'AM', 'AP', 'BA', 'BR', 'CE', 'DF', 'ES', 
@@ -390,6 +390,25 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 			return lastId
 		return 0
 
+def buscaCodigo(tabela, chave, ignoreInsert=0):
+   
+	if (chave == '#NULO'):
+		chave = 'NÃO DECLARADO'
+		
+	SQL_QUERY = "SELECT codigo FROM %s WHERE nome LIKE '%s' LIMIT 1" % (tabela, chave)
+	
+	(result, rowcount) = selectSQL(SQL_QUERY)
+   
+	if (rowcount > 0):
+		for row in result:
+			return row[0]
+	
+	if (ignoreInsert == 0):
+		SQL = "INSERT INTO %s VALUES (NULL, '%s')" % (tabela, chave)
+		lastId = executeSQL(SQL, '', 1)
+		return lastId
+	return 0
+		
 def buscaPartido(sigla):
    
 	SQL_QUERY = "SELECT codigo FROM partido WHERE sigla = '%s'" % (sigla)
@@ -689,7 +708,7 @@ def candBens(ano, estado):
 				id = addslashes(regb[5])
 				valor = float(addslashes(regb[9]))
 
-				tipo = buscaSimilaridade('tipo',addslashes(regb[7]))
+				tipo = buscaCodigo('tipo',addslashes(regb[7]))
 				descricao = addslashes(regb[8], 'nome')
 
 				if (descricao == 'ERR'):
@@ -802,23 +821,23 @@ def candDespesas(ano, estado):
 					estado = addslashes(regb[5])
 					
 				#PADRAO QUE E BOM, PULA...
-				tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 				if (tipo == '#NULO'):
-					tipo = buscaSimilaridade('tipo',addslashes(regb[t1]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t1]))
 
-				for ri,r in enumerate(regb):
-					print str(ri)+': '+str(r)
+				#for ri,r in enumerate(regb):
+				#	print str(ri)+': '+str(r)
 						
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
-					tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 				except ValueError:
-					tipo = buscaSimilaridade('tipo',addslashes(regb[t1]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t1]))
 					try:
 						valor = float(addslashes(regb[v1]).replace(',','.'))
 					except ValueError:
 						valor = float(addslashes(regb[v2]).replace(',','.'))
-						tipo = buscaSimilaridade('tipo',addslashes(regb[t2]))
+						tipo = buscaCodigo('tipo',addslashes(regb[t2]))
 					
 				id = addslashes(regb[n])
 				
@@ -906,7 +925,7 @@ def partDespesas(ano, estado):
 				
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
-				tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 				
 				#PADRAO QUE E BOM, PULA...
 				try:
@@ -1016,7 +1035,7 @@ def comiDespesas(ano, estado):
 				#LEGENDA
 				partido = buscaPartido(addslashes(regb[s]))
 
-				tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 				#PADRAO QUE E BOM, PULA...
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
@@ -1135,7 +1154,7 @@ def candReceitas(ano, estado):
 					estado = addslashes(regb[e])
 
 				#LEGENDA
-				tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+				tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 
 				#PADRAO QUE E BOM, PULA...				
 				doador = addslashes(regb[r1], 'nome')
@@ -1150,7 +1169,7 @@ def candReceitas(ano, estado):
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
 				except ValueError:
-					tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
+					tipo = buscaCodigo('tipo',addslashes(regb[t0]))
 					if (regb[v1] == ''): regb[v1] = '0,00'
 					valor = float(addslashes(regb[v1]).replace(',','.'))
 		
@@ -1233,7 +1252,7 @@ def partReceitas(ano, estado):
 				partido = addslashes(regb[p])
 				if (ano == '2010' or ano == '2012'): partido = buscaPartido(addslashes(regb[p]))
 				
-				tipo = buscaSimilaridade('tipo',addslashes(regb[ti]))
+				tipo = buscaCodigo('tipo',addslashes(regb[ti]))
 				
 				doador = addslashes(regb[d0], 'nome')
 				if (doador == 'ERR'):
@@ -1367,7 +1386,7 @@ def comiReceitas(ano, estado):
 				if (ano == '2010' or ano == '2012'): 
 					partido = buscaPartido(addslashes(regb[p]))
 
-				tipo = buscaSimilaridade('tipo',addslashes(regb[ti]))
+				tipo = buscaCodigo('tipo',addslashes(regb[ti]))
 				
 				doador = addslashes(regb[d0], 'nome')
 				if (doador == 'ERR'):
