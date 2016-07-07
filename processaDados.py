@@ -927,6 +927,9 @@ def partDespesas(ano, estado):
 				partido = buscaPartido(addslashes(regb[s]))
 				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				
+				for ri,r in enumerate(regb):
+					print str(ri)+': '+str(r)
+						
 				#PADRAO QUE E BOM, PULA...
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
