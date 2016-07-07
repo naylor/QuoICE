@@ -806,8 +806,8 @@ def candDespesas(ano, estado):
 				if (tipo == '#NULO'):
 					tipo = buscaSimilaridade('tipo',addslashes(regb[t1]))
 
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
+				for ri,r in enumerate(regb):
+					print str(ri)+': '+str(r)
 						
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
