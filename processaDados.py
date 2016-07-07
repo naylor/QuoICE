@@ -735,9 +735,9 @@ def candDespesas(ano, estado):
 		d1 = [18, 16]
 	
 	if (ano == '2012'):
-		t0 = 19
-		t1 = 20
-		t2 = 21
+		t0 = 15
+		t1 = 18
+		t2 = 15
 		v0 = 18
 		v1 = 19
 		v2 = 20
@@ -805,7 +805,10 @@ def candDespesas(ano, estado):
 				tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
 				if (tipo == '#NULO'):
 					tipo = buscaSimilaridade('tipo',addslashes(regb[t1]))
-				
+
+				#for ri,r in enumerate(regb):
+				#	print str(ri)+': '+str(r)
+						
 				try:
 					valor = float(addslashes(regb[v0]).replace(',','.'))
 					tipo = buscaSimilaridade('tipo',addslashes(regb[t0]))
