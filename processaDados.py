@@ -1234,15 +1234,18 @@ def partReceitas(ano, estado):
 				
 				doador = addslashes(regb[d0], 'nome')
 				if (doador == 'ERR'):
+					print "1: DOADOR"
 					exit(1)
 				#PADRAO QUE E BOM, PULA...				
 				if (doador == '#NULO'):
 					doador = addslashes(regb[d1], 'nome')
 					if (doador == 'ERR'):
+						print "2: DOADOR"
 						exit(1)
 				if (doador == '#NULO'):
 					doador = addslashes(regb[d2], 'nome')
 					if (doador == 'ERR'):
+						print "2: DOADOR"
 						exit(1)
 				
 				#PADRAO QUE E BOM, PULA...
