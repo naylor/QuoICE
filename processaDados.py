@@ -739,10 +739,10 @@ def candDespesas(ano, estado):
 		t1 = 18
 		t2 = 15
 		v0 = 18
-		v1 = 19
-		v2 = 20
+		v1 = 17
+		v2 = 19
 		n = 1
-		d1 = [14]
+		d1 = [13, 14]
 
 	SQL = "SELECT linha FROM candDespesas cd WHERE cd.ano = '%s' AND cd.estado = '%s'" % (ano, estado)
 
