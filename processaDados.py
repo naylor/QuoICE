@@ -929,8 +929,8 @@ def partDespesas(ano, estado):
 				partido = buscaPartido(addslashes(regb[s]))
 				tipo = buscaCodigo('tipo',addslashes(regb[t0], 'nome'))
 				
-				for ri,r in enumerate(regb):
-					print str(ri)+': '+str(r)
+				#for ri,r in enumerate(regb):
+				#	print str(ri)+': '+str(r)
 						
 				#PADRAO QUE E BOM, PULA...
 				try:
@@ -1035,8 +1035,8 @@ def comiDespesas(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 
-				#for ri,r in enumerate(regb):
-				#	print str(ri)+': '+str(r)
+				for ri,r in enumerate(regb):
+					print str(ri)+': '+str(r)
 				
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[3])
