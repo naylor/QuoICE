@@ -1192,6 +1192,8 @@ def partReceitas(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 
+				if (regb[0] == 'Data e Hora'): continue
+
 				#LEGENDA
 				partido = addslashes(regb[p])
 				if (ano == '2010' or ano == '2012' or ano == '2014'): 
@@ -1281,9 +1283,7 @@ def comiReceitas(ano, estado):
 				
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
-	
-				if (regb[0] == 'Data e Hora'): continue
-	
+		
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[e])
 
