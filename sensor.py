@@ -78,7 +78,7 @@ def monitorOff():
   keyLed('caps', 'off')
   time.sleep(1)
   keyLed('num', 'off')
-  espeak.synth("Até, vou tirar uma soneca")
+  espeak.synth("Vou tirar uma soneca")
   time.sleep(2)
   monitor('off')
 
