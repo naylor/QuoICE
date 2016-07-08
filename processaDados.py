@@ -669,11 +669,11 @@ def candidato(ano, estado):
 
 			linhas = ins.readlines()
 			qdeLinhas = len(linhas)
-	
-			if (rowcount+1 == qdeLinhas): 
-				print qdeLinhas
-				print rowcount
 
+			print qdeLinhas
+			print rowcount
+					
+			if (rowcount+1 == qdeLinhas): 
 				progress(100, 100, str(rowcount+1)+"/"+str(qdeLinhas))
 				ins.close()
 				return
