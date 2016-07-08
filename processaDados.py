@@ -385,7 +385,7 @@ def getCampos(regb, v1, t1, de1, do1):
 	ant=''
 	for vx in v1:
 		if vx == -1 and ant == '':
-			return 0
+			return '0.00'
 		valor = addslashes(regb[vx], 'valor')
 		ant = addslashes(regb[vx])
 
