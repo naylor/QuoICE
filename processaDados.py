@@ -1232,9 +1232,9 @@ def comiReceitas(ano, estado):
 
 	if (ano == '2012'):
 		p = 6
-		t1 = [19]
+		t1 = [19, 15]
 		d1 = [10, 11]
-		v1 = [18]
+		v1 = [18, 14]
 
 	SQL = "SELECT pr.linhaComite FROM partReceitas pr WHERE pr.ano = '%s' AND pr.estado = '%s' AND pr.linhaComite IS NOT NULL" % (ano, estado)
 
