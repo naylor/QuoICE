@@ -1192,8 +1192,10 @@ def partReceitas(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 
-				if regb[0] == "Data e hora": continue
-				print regb[0]
+				if regb[0] == "Data e hora":
+					print regb[0]
+					continue
+					
 				#LEGENDA
 				partido = addslashes(regb[p])
 				if (ano == '2010' or ano == '2012' or ano == '2014'): 
