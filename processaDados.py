@@ -410,6 +410,7 @@ def getCampos(regb, v1, t1, de1, do1):
 	for tx in t1:
 		try:
 			tipo = buscaCodigo('tipo', addslashes(regb[tx], 'nome'))
+			tipo = "{0:<10s}".format(truncate(tipo, 100))
 		except IndexError:
 			tipo = 'ERR'
 			pass
@@ -1274,12 +1275,14 @@ def comiReceitas(ano, estado):
 			ins.seek(0)
 			for count,numLinha in enumerate(diff):
 
-				if (numLinha == 0 ): continue
+				if (numLinha == 0): continue
 
 				progress(count, len(diff)-1, str(count)+"/"+str(len(diff)-1))
 				
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
+	
+				if (regb[0] == 'Data e Hora'): continue
 	
 				if (ano in ('2006', '2008')):
 					estado = addslashes(regb[e])
