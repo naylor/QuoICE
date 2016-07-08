@@ -383,6 +383,7 @@ def getCampos(regb, v1, t1, de1, do1):
 	valor=''
 	
 	for vx in v1:
+		print addslashes(regb[vx])
 		if vx == -1 and addslashes(regb[vx]) == '':
 			return 0
 		valor = addslashes(regb[vx], 'valor')
