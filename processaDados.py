@@ -390,7 +390,7 @@ def getCampos(regb, v1, t1, de1, do1):
 			valor = addslashes(regb[vx], 'valor')
 			ant = addslashes(regb[vx])
 		except IndexError:
-			return 'ERR'
+			valor = 'ERR'
 			pass
 
 		if (valor != 'ERR'):
