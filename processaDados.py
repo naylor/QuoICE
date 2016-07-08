@@ -381,13 +381,14 @@ def getCampos(regb, v1, t1, de1, do1):
 	doador=''
 	tipo=''
 	valor=''
-	
+
+	ant=''
 	for vx in v1:
-		print vx
-		print addslashes(regb[vx])
-		if vx == -1 and addslashes(regb[vx]) == '':
+		if vx == -1 and ant == '':
 			return 0
 		valor = addslashes(regb[vx], 'valor')
+		ant = addslashes(regb[vx])
+
 		if (valor != 'ERR'):
 			break
 	
