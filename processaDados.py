@@ -370,7 +370,7 @@ def addslashes(string, campo=''):
 		try:
 			valor = float(string.replace(',','.'))
 			return valor
-		except ValueError:
+		except ValueError, IndexError:
 			return 'ERR'
 			
 	return string
