@@ -672,7 +672,8 @@ def candidato(ano, estado):
 
 			print qdeLinhas
 			print rowcount
-					
+			print SQL
+			
 			if (rowcount+1 == qdeLinhas): 
 				progress(100, 100, str(rowcount+1)+"/"+str(qdeLinhas))
 				ins.close()
