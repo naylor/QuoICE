@@ -1192,7 +1192,7 @@ def partReceitas(ano, estado):
 				ins.seek(0)
 				regb = linhas[numLinha].split(";")
 
-				if regb[0] == "Data e hora":
+				if str(regb[0]) == "Data e hora":
 					print regb[0]
 					continue
 					
