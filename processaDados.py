@@ -335,6 +335,9 @@ def addslashes(string, campo=''):
 	string = string.translate(None, '´')
 	string = string.translate(None, "~")
 	string = string.translate(None, "!")
+	string = string.translate(None, "|")
+	string = string.translate(None, "]")
+	string = string.translate(None, "[")
 	string = string.translate(None, "*")
 	string = string.translate(None, "--")
 	string = string.translate(None, "#")
@@ -380,6 +383,8 @@ def getCampos(regb, v1, t1, de1, do1):
 	valor=''
 	
 	for vx in v1:
+		if vx == -1
+			return 0
 		valor = addslashes(regb[vx], 'valor')
 		if (valor != 'ERR'):
 			break
@@ -1047,7 +1052,7 @@ def candReceitas(ano, estado):
 
 	if (ano == '2006'):
 		t1 = [11]
-		v1 = [9]
+		v1 = [9, -1]
 		n = 0
 		d1 = [15]
 		e = 3
