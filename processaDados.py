@@ -383,7 +383,7 @@ def getCampos(regb, v1, t1, de1, do1):
 	valor=''
 	
 	for vx in v1:
-		if vx == -1:
+		if vx == 99:
 			return 0
 		valor = addslashes(regb[vx], 'valor')
 		if (valor != 'ERR'):
@@ -1052,7 +1052,7 @@ def candReceitas(ano, estado):
 
 	if (ano == '2006'):
 		t1 = [11]
-		v1 = [9, '-1']
+		v1 = [9, 99]
 		n = 0
 		d1 = [15]
 		e = 3
