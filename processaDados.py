@@ -397,18 +397,33 @@ def getCampos(regb, v1, t1, de1, do1):
 			break
 	
 	for dex in de1:
-		descricao = addslashes(regb[dex], 'nome')
+		try:
+			descricao = addslashes(regb[dex], 'nome')
+		except IndexError:
+			descricao = 'ERR'
+			pass
+			
 		if (descricao != 'ERR'):
 			descricao = "{0:<10s}".format(truncate(descricao, 200))
 			break
 
 	for tx in t1:
-		tipo = buscaCodigo('tipo', addslashes(regb[tx], 'nome'))
+		try:
+			tipo = buscaCodigo('tipo', addslashes(regb[tx], 'nome'))
+		except IndexError:
+			tipo = 'ERR'
+			pass
+			
 		if (tipo != 'ERR'):
 			break
 
 	for dox in do1:
-		doador = buscaSimilaridade('doador', addslashes(regb[dox], 'nome'))
+		try:
+			doador = buscaSimilaridade('doador', addslashes(regb[dox], 'nome'))
+		except IndexError:
+			doador = 'ERR'
+			pass
+			
 		if (doador != 'ERR'):
 			break
 
