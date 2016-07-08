@@ -760,11 +760,7 @@ def candBens(ano, estado):
 			
 			linhas = ins.readlines()
 			qdeLinhas = len(linhas)
-
-			print qdeLinhas
-			print rowcount
-			print SQL
-			
+	
 			if (rowcount+1 == qdeLinhas): 
 				progress(100, 100, str(rowcount+1)+"/"+str(qdeLinhas))
 				ins.close()
