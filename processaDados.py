@@ -409,8 +409,8 @@ def getCampos(regb, v1, t1, de1, do1):
 
 	for tx in t1:
 		try:
-			tipo = buscaCodigo('tipo', addslashes(regb[tx], 'nome'))
-			tipo = "{0:<10s}".format(truncate(tipo, 100))
+			tipo = "{0:<10s}".format(truncate(regb[tx], 100))
+			tipo = buscaCodigo('tipo', addslashes(tipo, 'nome'))
 		except IndexError:
 			tipo = 'ERR'
 			pass
