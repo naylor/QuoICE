@@ -368,6 +368,8 @@ def addslashes(string, campo=''):
 	
 	if campo == 'valor':
 		try:
+			if string == '':
+				return 0
 			valor = float(string.replace(',','.'))
 			return valor
 		except ValueError:
@@ -383,8 +385,6 @@ def getCampos(regb, v1, t1, de1, do1):
 	valor=''
 	
 	for vx in v1:
-		if vx == 99:
-			return 0
 		valor = addslashes(regb[vx], 'valor')
 		if (valor != 'ERR'):
 			break
@@ -1052,7 +1052,7 @@ def candReceitas(ano, estado):
 
 	if (ano == '2006'):
 		t1 = [11]
-		v1 = [9, 99]
+		v1 = [9]
 		n = 0
 		d1 = [15]
 		e = 3
