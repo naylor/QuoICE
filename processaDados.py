@@ -1194,7 +1194,7 @@ def partReceitas(ano, estado):
 
 				if str(regb[0]) == "Data e hora":
 					print regb[0]
-					continue
+					exit(1)
 					
 				#LEGENDA
 				partido = addslashes(regb[p])
