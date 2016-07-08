@@ -961,7 +961,7 @@ def comiDespesas(ano, estado):
 		s = 2
 		t1 = [7]
 		v1 = [5]
-		d1 = [14]
+		d1 = [14, 15]
 
 	if (ano == '2008'):
 		s = 2
