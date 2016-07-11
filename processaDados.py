@@ -460,8 +460,6 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	SQL_QUERY = "SELECT codigo, nome, LEVENSHTEIN(nome, '%s') AS distance FROM %s WHERE nome LIKE '%s' ORDER BY distance ASC LIMIT 1" % (chave, tabela, chave2)
 	(result, rowcount) = selectSQL(SQL_QUERY)
    
-	print SQL_QUERY
-	
 	find = 0
 	if (rowcount > 0):
 		for row in result:
