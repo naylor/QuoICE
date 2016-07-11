@@ -1345,9 +1345,9 @@ def main():
 	
 	while (inicio):
 		try:
-			url = 'http://www.tse.jus.br/hotSites/pesquisas-eleitorais/resultados_anos/'+str(inicio)+'.html'
-			req = urllib2.Request(url)
-			response = urllib2.urlopen(req)
+			#url = 'http://www.tse.jus.br/hotSites/pesquisas-eleitorais/resultados_anos/'+str(inicio)+'.html'
+			#req = urllib2.Request(url)
+			#response = urllib2.urlopen(req)
 			print "Limpando Tabelas TOP 10"
 			deleteTop10(str(inicio))
 			print 'Processando ANO: '+str(inicio)
