@@ -455,7 +455,7 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	if (chave == '#NULO'):
 		chave = 'NÃO DECLARADO'
 	
-	chave2 = chave[:3]+'%'
+	chave2 = chave[:5]+'%'
 	
 	SQL_QUERY = "SELECT codigo, nome, LEVENSHTEIN(nome, '%s') AS distance FROM %s WHERE nome LIKE '%s' ORDER BY distance ASC LIMIT 1" % (chave, tabela, chave2)
 	(result, rowcount) = selectSQL(SQL_QUERY)
