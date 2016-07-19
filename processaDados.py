@@ -368,6 +368,7 @@ def addslashes(string, campo=''):
 	
 	if campo == 'valor':
 		try:
+			print string
 			valor = float(string.replace(',','.'))
 			return valor
 		except ValueError:
@@ -385,12 +386,7 @@ def getCampos(regb, v1, t1, de1, do1):
 	ant=''
 	for vx in v1:
 		if vx == -1 and ant == '':
-			return '0.00'
-		
-		print vx
-		if vx == '' and len(v1) == 1:
-			return '0.00'
-			
+			return '0.00'		
 		try:
 			valor = addslashes(regb[vx], 'valor')
 			ant = addslashes(regb[vx])
