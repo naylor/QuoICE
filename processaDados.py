@@ -387,6 +387,7 @@ def getCampos(regb, v1, t1, de1, do1):
 		if vx == -1 and ant == '':
 			return '0.00'
 		
+		print len(v1)
 		if vx == '' and len(v1) == 1:
 			return '0.00'
 			
