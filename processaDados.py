@@ -368,7 +368,8 @@ def addslashes(string, campo=''):
 	
 	if campo == 'valor':
 		try:
-			print string
+			if string == '':
+				print string
 			valor = float(string.replace(',','.'))
 			return valor
 		except ValueError:
