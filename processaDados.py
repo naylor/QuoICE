@@ -323,7 +323,7 @@ def getFiles(ano):
 	return 1
 
 def addslashes(string, campo=''):
-
+	print string
 	string = string.translate(None, "'")
 	string = string.translate(None, "\\")
 	string = string.translate(None, "\"")
