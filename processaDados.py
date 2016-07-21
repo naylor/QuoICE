@@ -575,7 +575,7 @@ def getInfoPoliticosORG(numero, estado):
 			presenca = presenca[1].split(" ")
 			processo = presenca[0]
 
-		codigo = buscaSimilaridade('candidato', addslashes(nome), 1)
+		codigo = buscaSimilaridade('candidato', nome, 1)
 		if (codigo):
 			foto = ''
 			if (imagem and imagem != '/Content/manager/images/no_photo.png'):
