@@ -387,12 +387,12 @@ def getCampos(regb, v1, t1, de1, do1):
 	ant=''
 	for vx in v1:
 		if vx == -1 and ant == '':
-			return "0.00"		
+			return float("0.00")
 		try:
 			valor = addslashes(regb[vx], 'valor')
 			
 			if valor == 'NULL' and len(v1) == 1:
-				return "0.00"
+				return float("0.00")
 				
 			ant = addslashes(regb[vx])
 		except IndexError:
