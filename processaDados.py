@@ -426,7 +426,7 @@ def getCampos(regb, v1, t1, de1, do1):
 
 	for dox in do1:
 		try:
-			doador = buscaSimilaridade('doador', addslashes(regb[dox], 'nome'))
+			doador = buscaCodigo('doador', addslashes(regb[dox], 'nome'))
 		except IndexError:
 			doador = 'ERR'
 			pass
@@ -461,15 +461,17 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	if (chave == '#NULO'):
 		chave = 'NÃO DECLARADO'
 	
-	chave2 = chave[:15]+'%'
+	chave2 = chave[:3]+'%'
 	
-	SQL_QUERY = "SELECT codigo FROM %s WHERE nome LIKE '%s' " % (tabela, chave)
+	SQL_QUERY = "SELECT codigo, nome, LEVENSHTEIN(nome, '%s') AS distance FROM %s WHERE nome LIKE '%s' ORDER BY distance ASC LIMIT 1" % (chave, tabela, chave2)
 	(result, rowcount) = selectSQL(SQL_QUERY)
-    
+   
 	find = 0
 	if (rowcount > 0):
 		for row in result:
-			return row[0]
+			if row[2] < 10:
+				find = 1
+				return row[0]
 	
 	if (find == 0):
 		if (ignoreInsert == 0):
