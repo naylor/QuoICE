@@ -463,13 +463,13 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	
 	chave2 = chave[:15]+'%'
 	
-	SQL_QUERY = "SELECT codigo FROM %s WHERE nome = '%s'" % (tabela, chave)
+	SQL_QUERY = "SELECT codigo FROM %s WHERE nome LIKE '%s' " % (tabela, chave)
 	(result, rowcount) = selectSQL(SQL_QUERY)
    
 	find = 0
 	if (rowcount > 0):
 		for row in result:
-			if row[2] < 15:
+			if row[2] < 10:
 				find = 1
 				return row[0]
 	
