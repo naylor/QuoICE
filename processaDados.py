@@ -480,7 +480,7 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 			SQL = "INSERT INTO %s VALUES (NULL, '%s')" % (tabela, chave)
 			lastId = executeSQL(SQL, '', 1)
 
-			PRINT SQL
+			print SQL
 			
 			return lastId
 		return 0
