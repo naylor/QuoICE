@@ -399,7 +399,7 @@ def getCampos(regb, v1, t1, de1, do1):
 			valor = 'ERR'
 			pass
 
-		if (valor != 'ERR'):
+		if (valor != 'ERR' and valor != 'NULL'):
 			break
 	
 	for dex in de1:
@@ -486,14 +486,10 @@ def buscaCodigo(tabela, chave, ignoreInsert=0):
 		chave = 'NÃO DECLARADO'
 		
 	SQL_QUERY = "SELECT codigo FROM %s WHERE nome LIKE '%s' LIMIT 1" % (tabela, chave)
-
-	print SQL_QUERY
-	
 	(result, rowcount) = selectSQL(SQL_QUERY)
    
 	if (rowcount > 0):
 		for row in result:
-			print row[0]
 			if row[0] == 'None':
 				return 'ERR'
 			return row[0]
