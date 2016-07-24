@@ -469,7 +469,7 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	find = 0
 	if (rowcount > 0):
 		for row in result:
-			if row[2] < 10:
+			if row[2] < 15:
 				find = 1
 				return row[0]
 	
