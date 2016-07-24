@@ -465,7 +465,7 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	
 	SQL_QUERY = "SELECT codigo FROM %s WHERE nome LIKE '%s' " % (tabela, chave)
 	(result, rowcount) = selectSQL(SQL_QUERY)
-   
+    print SQL_QUERY
 	find = 0
 	if (rowcount > 0):
 		for row in result:
