@@ -463,7 +463,7 @@ def buscaSimilaridade(tabela, chave, ignoreInsert=0):
 	
 	chave2 = chave[:15]+'%'
 	
-	SQL_QUERY = "SELECT codigo FROM %s WHERE nome = '%s'" % (chave, tabela, chave2)
+	SQL_QUERY = "SELECT codigo FROM %s WHERE nome = '%s'" % (tabela, chave)
 	(result, rowcount) = selectSQL(SQL_QUERY)
    
 	find = 0
