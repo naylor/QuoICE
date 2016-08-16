@@ -162,6 +162,8 @@ def createTop10(ano, estado):
 			DESC LIMIT 10" % (estado, ano, q)
 	executeSQL(SQL)
 	
+	print "Criando Registros topCandidatos: receita (%s/%s)" % (ano, estado)
+
 	SQL = "INSERT INTO topCandidatos (cpf, ano, valor, tipo, estado) \
 			SELECT c.cpf, c.ano, SUM(valor), 'despesa', '%s' \
 			FROM candDespesas r, candidato c, partido p, candCargo ca \
@@ -176,7 +178,9 @@ def createTop10(ano, estado):
 			ORDER BY SUM(valor) \
 			DESC LIMIT 10" % (estado, ano, q)
 	executeSQL(SQL)
-	
+
+	print "Criando Registros topCandidatos: despesa (%s/%s)" % (ano, estado)
+
 	SQL = "INSERT INTO topPartidos (partido, ano, valor, estado, tipo) \
 			SELECT p.codigo, c.ano, SUM(valor), '%s', 'receita' \
 			FROM partReceitas c, partido p \
@@ -187,7 +191,9 @@ def createTop10(ano, estado):
 			ORDER BY SUM(valor) \
 			DESC LIMIT 10" % (estado, ano, q)
 	executeSQL(SQL)
-	
+
+	print "Criando Registros topPartidos: receita (%s/%s)" % (ano, estado)
+
 	SQL = "INSERT INTO topPartidos (partido, ano, valor, estado, tipo) \
 			SELECT p.codigo, c.ano, SUM(valor), '%s', 'despesa' \
 			FROM partDespesas c, partido p \
@@ -198,6 +204,8 @@ def createTop10(ano, estado):
 			ORDER BY SUM(valor) \
 			DESC LIMIT 10" % (estado, ano, q)
 	executeSQL(SQL)
+
+	print "Criando Registros topPartidos: despesa (%s/%s)" % (ano, estado)
 
 	EXCLUDE = " AND (d.nome NOT LIKE '%partido%'  \
 				AND d.nome NOT LIKE '%eleicao%' \
@@ -227,7 +235,9 @@ def createTop10(ano, estado):
 			ORDER BY SUM(vl) DESC \
 			LIMIT 10" % (estado, ano, EXCLUDE, q, estado, ano, EXCLUDE, q)
 	executeSQL(SQL)		
-		
+
+	print "Criando Registros topDoador (%s/%s)" % (ano, estado)
+
 	SQL = "INSERT INTO topBens (cpf, ano, estado, valor) \
 			SELECT c.cpf, c.ano, c.estado, SUM(b.valor) \
 			FROM candBens b, candidato c \
@@ -239,7 +249,9 @@ def createTop10(ano, estado):
 			AND c.ano = '%s' \
 			GROUP BY c.cpf, c.ano, c.estado" % (estado, ano)
 	executeSQL(SQL)	
-	
+
+	print "Criando Registros topBens (%s/%s)" % (ano, estado)
+
 	return 1
 
 def rendasTop10(anos):
