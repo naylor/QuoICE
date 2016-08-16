@@ -142,10 +142,10 @@ def deleteTop10(ano):
 	return 1
 	
 def createTop10(ano, estado):
-	if (estado != 'BR'):
-		q = "AND c.estado = '"+estado+"'"
-	else:
-		q = ''
+	#if (estado != 'BR'):
+	q = "AND c.estado = '"+estado+"'"
+	#else:
+	#	q = ''
 		
 	SQL = "INSERT INTO topCandidatos (cpf, ano, valor, tipo, estado) \
 			SELECT c.cpf, c.ano, SUM(valor), 'receita', '%s' \
